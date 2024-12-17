@@ -1,3 +1,6 @@
 # Weather Ireland
 
-Weather app for Ireland using [Met Éireann open api](https://www.met.ie/about-us/specialised-services/open-data).
+Weather app for Ireland using [Met Éireann open api](https://www.met.ie/about-us/specialised-services/open-data).  
+
+
+![Sample Image](/public/sample.jpg)  

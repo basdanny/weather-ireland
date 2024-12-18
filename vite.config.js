@@ -6,21 +6,21 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      base: '/weather-ireland/',
+      base: './weather-ireland/',
       registerType: 'autoUpdate',
       manifest: {
         name: 'Weather Ireland',
         short_name: 'Weather',
-        description: 'Weather Progressive Web App',
+        description: 'Weather - Ireland',
         theme_color: '#ffffff',
         icons: [
           {
-            src: '/weather-192.png',
+            src: 'weather-192.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: '/weather-512.png',
+            src: 'weather-512.png',
             sizes: '512x512',
             type: 'image/png'
           }

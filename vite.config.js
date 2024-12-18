@@ -6,7 +6,6 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      base: './weather-ireland/',
       registerType: 'autoUpdate',
       manifest: {
         name: 'Weather Ireland',

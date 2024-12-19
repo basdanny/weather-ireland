@@ -1,4 +1,4 @@
-//using thingproxy.freeboard.io to overcome the lack of proper CORS headers in the openaccess.pf.api.met.ie/metno-wdb2ts APIs
+//using simple proxy (via cloudflare worker) to overcome the lack of proper CORS headers in the openaccess.pf.api.met.ie/metno-wdb2ts APIs
 const BASE_URL = 'https://corsproxy.basdanny.workers.dev/http://openaccess.pf.api.met.ie/metno-wdb2ts/locationforecast';
 
 export const fetchLocationForecast = async (lat, lon) => {

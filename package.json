@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build --base=/weather-ireland/",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite build && vite preview"
   },
   "dependencies": {
     "react": "^18.3.1",

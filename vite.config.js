@@ -26,6 +26,15 @@ export default defineConfig({
           }
         ],
         display: "standalone",
+        screenshots: [
+          {
+            "src": "sample.jpg",
+             "sizes": "458x912",
+             "type": "image/jpg",
+             "form_factor": "narrow",
+             "label": "default"
+           }
+        ]
       }
     })
   ]

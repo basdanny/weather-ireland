@@ -5,9 +5,10 @@ import Forecast from './components/Forecast';
 import LocationSearch from './components/LocationSearch';
 import LoadingSpinner from './components/LoadingSpinner';
 import ErrorMessage from './components/ErrorMessage';
+import HourlyForecast from './components/HourlyForecast';
 
 function App() {
-  const { weather, forecast, error, loading, fetchData } = useWeatherData();
+  const { weather, hourlyForecast, forecast, error, loading, fetchData } = useWeatherData();
 
   useEffect(() => {
     const getLocation = () => {
@@ -45,6 +46,7 @@ function App() {
         ) : (
           <>
             {weather && <CurrentWeather data={weather} />}
+            {hourlyForecast && <HourlyForecast data={hourlyForecast} />}
             {forecast && <Forecast data={forecast} />}
           </>
         )}

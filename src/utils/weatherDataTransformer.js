@@ -4,27 +4,51 @@ export const transformCurrentWeather = (xmlData) => {
   return parseWeatherXML(xmlData);
 };
 
-export const transformForecast = (xmlString) => { 
+export const transformHourlyForecast = (xmlString) => {
+  return parseHourlyWeatherXML(xmlString);
+}
+
+export const transformForecast = (xmlString) => {
   return parseForecastXml(xmlString);
 }
 
 function parseWeatherXML(xmlString) {
-  const parser = new DOMParser();
-  const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+  const xmlDoc = parseXmlString(xmlString);
 
-  if (!xmlDoc) {
-    throw new Error('Invalid weather data format');
-  }
-  
   // Find the first location element (assuming single location)
   const locationElement = xmlDoc.querySelectorAll('location')[0];
   const locationElement2 = xmlDoc.querySelectorAll('location')[1];
-  
+
   if (!locationElement) {
     throw new Error('No location data found in XML');
   }
 
   return parseLocationPairElements(locationElement, locationElement2);
+}
+
+function parseHourlyWeatherXML(xmlString) {
+  const xmlDoc = parseXmlString(xmlString);
+
+  const timeElements = xmlDoc.querySelectorAll('time');
+  const today = new Date().getDate();
+
+  const hourlyForecasts = Array.from(timeElements)
+    .filter((timeElement, index) => {
+      let from = new Date(timeElement.getAttribute('from'));
+      let to = new Date(timeElement.getAttribute('to'));
+      return (from.getDate() == today || from.getDate() == today + 1) && from.getTime() == to.getTime();
+    })
+    .slice(0, 9)
+    .map(timeElement => {
+      return {
+        dt: new Date(timeElement.getAttribute('from')),
+        temp: parseFloat(timeElement.querySelector('location > temperature').getAttribute('value')),
+        symbol: getWeatherIcon(timeElement.nextElementSibling.querySelector('location > symbol').getAttribute('id'))
+      };
+    });
+
+
+  return hourlyForecasts;
 }
 
 function parseLocationPairElements(locationElement, locationElement2) {
@@ -46,7 +70,7 @@ function parseLocationPairElements(locationElement, locationElement2) {
     },
     weather: [{
       description: weatherSymbol.replace(/([A-Z])/g, ' $1').trim(),
-      icon: getWeatherIcon(weatherSymbol) 
+      icon: getWeatherIcon(weatherSymbol)
     }],
     wind: {
       speed: windSpeed
@@ -54,22 +78,17 @@ function parseLocationPairElements(locationElement, locationElement2) {
   };
 }
 
-export const parseForecastXml = (xmlString) => {    
-  const parser = new DOMParser();
-  const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+export const parseForecastXml = (xmlString) => {
+  const xmlDoc = parseXmlString(xmlString);
 
-  if (!xmlDoc) {
-    throw new Error('Invalid weather data format');
-  }
-    
-  const timeElements = xmlDoc.querySelectorAll('time');  
+  const timeElements = xmlDoc.querySelectorAll('time');
 
   const dailyForecastsByDay = getDailyForecastsByDay(timeElements);
 
   const dailyForecasts = Array.from(timeElements)
-    .filter((timeElement, index) => { 
+    .filter((timeElement, index) => {
       let from = new Date(timeElement.getAttribute('from'));
-      let to = new Date(timeElement.getAttribute('to'));      
+      let to = new Date(timeElement.getAttribute('to'));
       return from.getDate() != new Date().getDate() && from.getTime() == to.getTime() && from.getHours() == 12;
     })
     .map(timeElement => {
@@ -99,6 +118,7 @@ export const parseForecastXml = (xmlString) => {
   };
 };
 
+
 function getDailyForecastsByDay(timeElements) {
   const allDailyForecasts = Array.from(timeElements)
     .filter((timeElement, index) => {
@@ -118,9 +138,17 @@ function getDailyForecastsByDay(timeElements) {
 }
 
 
+function parseXmlString(xmlString) {
+  const parser = new DOMParser();
+  const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+
+  if (!xmlDoc) throw new Error('Invalid weather data format');
+  else return xmlDoc;
+}
+
 const convertMpsToKmh = (mps) => mps * 3.6;
 
-function getFeelsLike(temperature, humidity, windSpeedKmh) {  
+function getFeelsLike(temperature, humidity, windSpeedKmh) {
   const windChillFactor = windSpeedKmh > 4.8 ? 13.12 + 0.6215 * temperature - 11.37 * Math.pow(windSpeedKmh, 0.16) + 0.3965 * temperature * Math.pow(windSpeedKmh, 0.16) : temperature;
   const heatIndex = temperature >= 27 ? -8.78469475556 + 1.61139411 * temperature + 2.33854883889 * humidity - 0.14611605 * temperature * humidity - 0.012308094 * Math.pow(temperature, 2) - 0.0164248277778 * Math.pow(humidity, 2) + 0.002211732 * Math.pow(temperature, 2) * humidity + 0.00072546 * temperature * Math.pow(humidity, 2) - 0.000003582 * Math.pow(temperature, 2) * Math.pow(humidity, 2) : temperature;
   return heatIndex > temperature ? heatIndex : windChillFactor;

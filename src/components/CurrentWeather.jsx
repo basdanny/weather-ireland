@@ -1,6 +1,7 @@
 import React from 'react';
 import { format } from 'date-fns';
 import { WiThermometer, WiHumidity, WiStrongWind } from 'react-icons/wi';
+import { isDarkTime } from '../utils/daylight';
 
 const CurrentWeather = ({ data }) => {
   if (!data) return null;
@@ -14,9 +15,9 @@ const CurrentWeather = ({ data }) => {
       
       <div className="flex justify-center items-center mb-6">
         <img 
-          src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`}
+          src={`https://cdn-a.metweb.ie//images/web-meteogram-small/${data.weather[0].icon}.png`}
           alt={data.weather[0].description}
-          className="w-32 h-32"
+          className={`w-20 h-20 ${isDarkTime(new Date()) ? 'grayscale' : ''}`}
         />
         <div className="text-center">
           <h1 className="text-6xl font-bold">{Math.round(data.main.temp)}°C</h1>

@@ -13,7 +13,7 @@ const Forecast = ({ data }) => {
             <div key={index} className="flex items-center justify-between">
               <span className="w-24">{format(new Date(item.dt), 'EEE, MMM d')}</span>
               <img
-                src={`https://openweathermap.org/img/wn/${item.weather[0].icon}.png`}
+                src={`https://cdn-a.metweb.ie//images/web-meteogram-small/${item.weather[0].icon}.png`}
                 alt={item.weather[0].description}
                 className="w-10 h-10"
               />

@@ -11,7 +11,7 @@ const HourlyForecast = ({ data }) => {
         {data.map((item, index) => (
           <div key={index} className="flex flex-col items-center min-w-[50px] flex-shrink-0">
             <span className="text-center">
-              {item.temp}°
+              {Math.round(item.temp)}°
             </span>
             <img
               src={`https://cdn-a.metweb.ie//images/web-meteogram-small/${item.symbol}.png`}

@@ -1,11 +1,14 @@
 import { getWeatherIcon } from './weatherSymbols';
 
-export const transformCurrentWeather = (xmlData) => {
+export const transformCurrentWeather = (xmlData, date) => {
+  if (date && date != new Date().getDate()) 
+    return null;
+  
   return parseWeatherXML(xmlData);
 };
 
-export const transformHourlyForecast = (xmlString) => {
-  return parseHourlyWeatherXML(xmlString);
+export const transformHourlyForecast = (xmlString, date) => {
+  return parseHourlyWeatherXML(xmlString, date);
 }
 
 export const transformForecast = (xmlString) => {
@@ -26,19 +29,19 @@ function parseWeatherXML(xmlString) {
   return parseLocationPairElements(locationElement, locationElement2);
 }
 
-function parseHourlyWeatherXML(xmlString) {
+function parseHourlyWeatherXML(xmlString, maybeDate) {
   const xmlDoc = parseXmlString(xmlString);
 
   const timeElements = xmlDoc.querySelectorAll('time');
-  const today = new Date().getDate();
+  const date = maybeDate || new Date().getDate(); 
 
   const hourlyForecasts = Array.from(timeElements)
     .filter((timeElement, index) => {
       let from = new Date(timeElement.getAttribute('from'));
       let to = new Date(timeElement.getAttribute('to'));
-      return (from.getDate() == today || from.getDate() == today + 1) && from.getTime() == to.getTime();
+      return (from.getDate() == date || from.getDate() == date + 1) && from.getTime() == to.getTime();
     })
-    .slice(0, 9)
+    .slice(0, 24)
     .map(timeElement => {
       return {
         dt: new Date(timeElement.getAttribute('from')),

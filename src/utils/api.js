@@ -6,8 +6,7 @@ export const fetchLocationForecast = async (lat, lon) => {
     const response = await fetch(`${BASE_URL}?lat=${lat}&long=${lon}`);
     if (!response.ok) {
       throw new Error('Failed to fetch weather data. Error: ' + response.error);
-    }
-    console.log(response);
+    }    
     const data = await response.text();
     return data;
   } catch (error) {

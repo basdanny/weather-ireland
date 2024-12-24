@@ -8,7 +8,8 @@ import ErrorMessage from './components/ErrorMessage';
 import HourlyForecast from './components/HourlyForecast';
 
 function App() {
-  const { weather, hourlyForecast, forecast, error, loading, fetchData } = useWeatherData();
+  const { weather, hourlyForecast, forecast, error, loading, location, fetchData } = useWeatherData();
+
 
   useEffect(() => {
     const getLocation = () => {
@@ -33,6 +34,11 @@ function App() {
     fetchData(lat, lon);
   };
 
+  const handleDateSelect = (date) => {
+    console.log(`Fetching data with date: ${date}`);
+    fetchData(location.lat, location.lon, date);
+  }
+
   if (error) {
     return <ErrorMessage message={error} />;
   }
@@ -47,7 +53,7 @@ function App() {
           <>
             {weather && <CurrentWeather data={weather} />}
             {hourlyForecast && <HourlyForecast data={hourlyForecast} />}
-            {forecast && <Forecast data={forecast} />}
+            {forecast && <Forecast data={forecast} onDateSelect={handleDateSelect} />}
           </>
         )}
       </div>

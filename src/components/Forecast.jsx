@@ -1,8 +1,12 @@
 import React from 'react';
 import { format } from 'date-fns';
 
-const Forecast = ({ data }) => {
+const Forecast = ({ data, onDateSelect }) => {
   if (!data) return null;
+
+  const handleDateSelect = (dt) => {
+    onDateSelect(new Date(dt).getDate());
+  }
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
@@ -10,7 +14,10 @@ const Forecast = ({ data }) => {
       <div className="space-y-4">
         {data.list          
           .map((item, index) => (
-            <div key={index} className="flex items-center justify-between">
+            <div 
+              key={index} className="flex items-center justify-between"
+              onClick={() => handleDateSelect(item.dt)}
+            >
               <span className="w-24">{format(new Date(item.dt), 'EEE, MMM d')}</span>
               <img
                 src={`https://cdn-a.metweb.ie//images/web-meteogram-small/${item.weather[0].icon}.png`}

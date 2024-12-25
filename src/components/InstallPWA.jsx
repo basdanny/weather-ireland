@@ -17,7 +17,7 @@ const InstallPWA = () => {
             // Show the prompt
             deferredPrompt.prompt();
             // Wait for the user to respond to the prompt
-            const { outcome } = await deferredPrompt.userChoice;            
+            const { outcome } = await deferredPrompt.userChoice;         
             // Clear the deferredPrompt variable
             deferredPrompt = null;
         }
@@ -26,7 +26,7 @@ const InstallPWA = () => {
     const showInstallButton = () => {
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        if (!isStandalone || isMobile) {
+        if (!isStandalone && isMobile) {
             shouldShow = true;
         }        
     }
@@ -41,7 +41,7 @@ const InstallPWA = () => {
                     className="mt-4 mx-auto block px-4 py-2 bg-white text-gray-800 border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50"                    
                     onClick={promptInstallPWA}
                 >
-                    Install PWA
+                    Add to Home screen
                 </button>
             )}
         </>

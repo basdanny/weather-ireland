@@ -6,6 +6,7 @@ import LocationSearch from './components/LocationSearch';
 import LoadingSpinner from './components/LoadingSpinner';
 import ErrorMessage from './components/ErrorMessage';
 import HourlyForecast from './components/HourlyForecast';
+import InstallPWA from './components/InstallPWA';
 
 function App() {
   const { weather, hourlyForecast, forecast, error, loading, location, fetchData } = useWeatherData();
@@ -54,6 +55,7 @@ function App() {
             {weather && <CurrentWeather data={weather} />}
             {hourlyForecast && <HourlyForecast data={hourlyForecast} />}
             {forecast && <Forecast data={forecast} onDateSelect={handleDateSelect} />}
+            {weather && <InstallPWA />}
           </>
         )}
       </div>

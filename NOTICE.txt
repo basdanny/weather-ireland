@@ -1,9 +1,23 @@
-Attribution
------------
+NOTICES AND INFORMATION
+
+-------------------------------------------------------------------
+
+Met Éireann - open api https://www.met.ie/about-us/specialised-services/open-data
+
 1. Copyright statement: Copyright Met Éireann
 2. Source met.ie
 3. Licence Statement: This data is published under a Creative Commons Attribution 4.0 International (CC BY 4.0) - https://creativecommons.org/licenses/by/4.0/
 4. Disclaimer: Met Éireann does not accept any liability whatsoever for any error or omission in the data, their availability, or for any loss or damage arising from their use.
 5. Where applicable, an indication if the material has been modified and an indication of previous modifications
------------
-<a href="https://www.flaticon.com/free-icons/weather-app" title="weather app icons">Weather app icons created by Freepik - Flaticon</a>
+
+-------------------------------------------------------------------
+
+Freepik Company
+
+https://www.flaticon.com/free-icons/weather-app Weather app icons created by Freepik - Flaticon
+
+-------------------------------------------------------------------
+GeoNames
+The GeoNames geographical database covers all countries and contains over eleven million placenames that are available for download free of charge.
+https://www.geonames.org/
+

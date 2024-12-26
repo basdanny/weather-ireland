@@ -15,7 +15,7 @@ export const fetchLocationForecast = async (lat, lon) => {
   }
 };
 
-const GEO_LOCATION_API_BASE_URL = 'http://api.geonames.org/searchJSON';
+const GEO_LOCATION_API_BASE_URL = 'https://corsproxy.basdanny.workers.dev/http://api.geonames.org/searchJSON';
 
 export const searchGeoLocation = async (query) => {
   try {
@@ -27,6 +27,6 @@ export const searchGeoLocation = async (query) => {
     return data;
   } catch (error) {
     console.error('Error searching geo location:', error);
-    throw new Error('Failed to geo location. Error: ' + error);
+    throw new Error('Failed to fetch geo location. Error: ' + error);
   }
 };

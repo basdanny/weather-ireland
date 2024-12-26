@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { searchLocation } from '../utils/geocoding';
+import { searchLocation } from '../utils/geoLocation';
 import { IoSearchOutline } from 'react-icons/io5';
 
 const LocationSearch = ({ onLocationSelect }) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState('');  
   const [results, setResults] = useState([]);
   const [searching, setSearching] = useState(false);
   const [error, setError] = useState(null);
@@ -30,7 +30,7 @@ const LocationSearch = ({ onLocationSelect }) => {
 
   const handleLocationSelect = (location) => {
     onLocationSelect(location.lat, location.lon);
-    setQuery('');
+    setQuery(location.name);
     setResults([]);
     setError(null);
   };
@@ -42,7 +42,7 @@ const LocationSearch = ({ onLocationSelect }) => {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search for a city in Ireland..."
+          placeholder={query ? `${query}` : 'Search for a city in Ireland...'}
           className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <button

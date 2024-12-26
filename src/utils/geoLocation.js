@@ -1,3 +1,5 @@
+import { searchGeoLocation } from '../utils/api';
+
 // List of some of the Irish cities
 const IRISH_CITIES = [
   { name: 'Dublin', lat: 53.3498, lon: -6.2603 },
@@ -85,9 +87,20 @@ const IRISH_CITIES = [
 ];
 
 export const searchLocation = async (query) => {
+  // local limited and quick search
   const normalizedQuery = query.toLowerCase().trim();
-  const results = IRISH_CITIES.filter(city => 
+  const quickResults = IRISH_CITIES.filter(city => 
     city.name.toLowerCase().includes(normalizedQuery)
   );
-  return results;
+  if (quickResults.length > 0) {
+    return quickResults;
+  }
+  
+  // remote fuzzy search
+  const searchResults = await searchGeoLocation(query);
+  return searchResults.geonames
+    .map((item) => {
+      const { name, lat, lng } = item;
+      return { name, lat, lon: lng };
+    });
 };

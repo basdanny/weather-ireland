@@ -5,5 +5,7 @@ Weather app for Ireland using
 * [GeoNames](https://www.geonames.org/) for geo location search.
 * [Cloudflare](https://www.cloudflare.com/) worker to proxy requests to the APIs (to resolve CORS and mixed content errors).
 
+Try it out here: https://basdanny.github.io/weather-ireland/  
+
 
 ![Sample Image](/public/sample.jpg)  

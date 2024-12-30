@@ -40,16 +40,14 @@ function App() {
     fetchData(location.lat, location.lon, date);
   }
 
-  if (error) {
-    return <ErrorMessage message={error} />;
-  }
-
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4">
       <div className="max-w-md mx-auto">
         <LocationSearch onLocationSelect={handleLocationSelect} />
         {loading ? (
           <LoadingSpinner />
+        ) : (error ? (
+          <ErrorMessage message={error} />
         ) : (
           <>
             {weather && <CurrentWeather data={weather} />}
@@ -57,7 +55,7 @@ function App() {
             {forecast && <Forecast data={forecast} onDateSelect={handleDateSelect} />}
             {weather && <InstallPWA />}
           </>
-        )}
+        ))}
       </div>
     </div>
   );

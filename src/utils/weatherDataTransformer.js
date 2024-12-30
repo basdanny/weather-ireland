@@ -23,7 +23,7 @@ function parseWeatherXML(xmlString) {
   const locationElement2 = xmlDoc.querySelectorAll('location')[1];
 
   if (!locationElement) {
-    throw new Error('No location data found in XML');
+    throw new Error('No location data found in the forecast data.');
   }
 
   return parseLocationPairElements(locationElement, locationElement2);

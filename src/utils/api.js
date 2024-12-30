@@ -4,16 +4,19 @@ const WEATHER_API_BASE_URL = 'https://corsproxy.basdanny.workers.dev/http://open
 export const fetchLocationForecast = async (lat, lon) => {
   try {
     const response = await fetch(`${WEATHER_API_BASE_URL}?lat=${lat}&long=${lon}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch weather data. Error: ' + response.error);
+    if (response.ok) {
+      return await response.text();
     }
-    const data = await response.text();
-    return data;
+    if (response.status === 404) {
+      return null;
+    }
+    throw new Error(`Status: ${response.status}`);
+
   } catch (error) {
     console.error('Error fetching forecast:', error);
-    throw new Error('Failed to fetch weather data. Error: ' + error);
+    throw new Error(`Failed to fetch weather data. Error: ${error.message}`);
   }
-};
+}
 
 const GEO_LOCATION_API_BASE_URL = 'https://corsproxy.basdanny.workers.dev/http://api.geonames.org/searchJSON';
 
@@ -29,4 +32,4 @@ export const searchGeoLocation = async (query) => {
     console.error('Error searching geo location:', error);
     throw new Error('Failed to fetch geo location. Error: ' + error);
   }
-};
+}

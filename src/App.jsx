@@ -11,7 +11,6 @@ import InstallPWA from './components/InstallPWA';
 function App() {
   const { weather, hourlyForecast, forecast, error, loading, location, fetchData } = useWeatherData();
 
-
   useEffect(() => {
     const getLocation = () => {
       if (!navigator.geolocation) {
@@ -24,7 +23,9 @@ function App() {
         },
         () => {
           // Silently fail and let user search manually
-        }
+          console.log('Failed to get current location');
+        },
+        { enableHighAccuracy: false }
       );
     };
 
@@ -51,7 +52,7 @@ function App() {
         ) : (
           <>
             {weather && <CurrentWeather data={weather} />}
-            {hourlyForecast && <HourlyForecast data={hourlyForecast} />}
+            {hourlyForecast && <HourlyForecast data={hourlyForecast} scrollToMorning={!weather && hourlyForecast} />}
             {forecast && <Forecast data={forecast} onDateSelect={handleDateSelect} />}
             {weather && <InstallPWA />}
           </>

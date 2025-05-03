@@ -92,7 +92,7 @@ export const parseForecastXml = (xmlString) => {
     .filter((timeElement, index) => {
       let from = new Date(timeElement.getAttribute('from'));
       let to = new Date(timeElement.getAttribute('to'));
-      return from.getDate() != new Date().getDate() && from.getTime() == to.getTime() && from.getHours() == 12;
+      return from.getDate() != new Date().getDate() && from.getTime() == to.getTime() && from.getHours() == 13;
     })
     .map(timeElement => {
       return {

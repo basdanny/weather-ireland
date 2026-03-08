@@ -1,5 +1,4 @@
-//using simple proxy (via cloudflare worker) to overcome the lack of proper CORS headers in the openaccess.pf.api.met.ie/metno-wdb2ts APIs
-const WEATHER_API_BASE_URL = 'https://corsproxy.basdanny.workers.dev/http://openaccess.pf.api.met.ie/metno-wdb2ts/locationforecast';
+import { WEATHER_API_BASE_URL, GEO_LOCATION_API_BASE_URL } from '../utils/constants';
 
 export const fetchLocationForecast = async (lat, lon) => {
   try {
@@ -17,8 +16,6 @@ export const fetchLocationForecast = async (lat, lon) => {
     throw new Error(`Failed to fetch weather data. Error: ${error.message}`);
   }
 }
-
-const GEO_LOCATION_API_BASE_URL = 'https://corsproxy.basdanny.workers.dev/http://api.geonames.org/searchJSON';
 
 export const searchGeoLocation = async (query) => {
   try {

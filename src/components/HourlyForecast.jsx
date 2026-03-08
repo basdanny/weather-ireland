@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { isDarkTime } from '../utils/daylight';
+import { ICON_URL_TEMPLATE } from '../utils/constants';
 
 const HourlyForecast = ({ data, scrollToMorning }) => {
   if (!data) return null;
@@ -29,7 +30,7 @@ const HourlyForecast = ({ data, scrollToMorning }) => {
               {Math.round(item.temp)}°
             </span>
             <img
-              src={`https://cdn-a.metweb.ie//images/web-meteogram-small/${item.symbol}.png`}
+              src={`${ICON_URL_TEMPLATE.replace('{0}', item.icon)}`}
               className={`w-8 h-8 ${isDarkTime(item.dt) ? 'grayscale' : ''}`}
               alt="weather icon"
             />

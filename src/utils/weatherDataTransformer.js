@@ -46,10 +46,9 @@ function parseHourlyWeatherXML(xmlString, maybeDate) {
       return {
         dt: new Date(timeElement.getAttribute('from')),
         temp: parseFloat(timeElement.querySelector('location > temperature').getAttribute('value')),
-        symbol: getWeatherIcon(timeElement.nextElementSibling.querySelector('location > symbol').getAttribute('id'))
+        icon: getWeatherIcon(timeElement.nextElementSibling.querySelector('location > symbol').getAttribute('id'))
       };
     });
-
 
   return hourlyForecasts;
 }
@@ -110,10 +109,10 @@ export const parseForecastXml = (xmlString) => {
         temp_min: Math.min(...dailyForecastsByDay[item.day].map(item => item.temp)),
         temp_max: Math.max(...dailyForecastsByDay[item.day].map(item => item.temp)),
       },
-      weather: [{
+      weather: {
         description: item.data.weather[0].description,
         icon: item.data.weather[0].icon
-      }]
+      }
     }));
 
   return {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { format } from 'date-fns';
+import { ICON_URL_TEMPLATE } from '../utils/constants';
 
 const Forecast = ({ data, onDateSelect }) => {
   if (!data) return null;
@@ -20,8 +21,8 @@ const Forecast = ({ data, onDateSelect }) => {
             >
               <span className="w-24">{format(new Date(item.dt), 'EEE, MMM d')}</span>
               <img
-                src={`https://cdn-a.metweb.ie//images/web-meteogram-small/${item.weather[0].icon}.png`}
-                alt={item.weather[0].description}
+                src={`${ICON_URL_TEMPLATE.replace('{0}', item.weather.icon)}`}
+                alt={item.weather.description}
                 className="w-10 h-10"
               />
               <span className="w-32 text-right">
